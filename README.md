@@ -29,23 +29,3 @@ ferramentas/gerar_mundos.py   gera todos os .wbt e o .proto
 | 6 | Robô de 4 rodas | `4_wheels_robot.wbt` | `four_wheels_collision_avoidance` |
 | 7 | Primeiro PROTO | `4_wheels_robot_proto.wbt` | `four_wheels_collision_avoidance` |
 | 8 | Supervisor | `my_supervisor/worlds/my_supervisor.wbt` | `supervisor_controller` |
-
-## Como rodar
-
-1. Instale o [Webots R2025a](https://cyberbotics.com/) e o Python 3.
-2. No Webots: **File → Open World...** e escolha um `.wbt`.
-3. Clique em ▶ (Run real-time). As mensagens dos controladores aparecem no Console.
-
-Na primeira abertura, o Webots baixa da internet os modelos prontos (e-puck, BB-8, Nao etc.).
-
-## Diferenças em relação às soluções oficiais
-
-- **Tutorial 5:** o centro de massa do haltere foi deslocado em `0.01` no eixo z, como diz o texto (a solução oficial usa `-0.02`). Os pesos usam DEF/USE.
-- **Tutorial 6:** as rodas compartilham `WHEEL_PH` e os sensores têm forma física (`boundingObject`), como pede o texto. Só ficam o chão, as paredes e a luz.
-- **Tutorial 7:** além de `translation`, `rotation` e `bodyMass`, o PROTO expõe `name` e `controller`, para ter dois robôs no mesmo mundo sem conflito de nome.
-- **Tutorial 8:** a bola fica vermelha quando encosta no chão, usando o raio real dela (o tutorial usa um 0.2 fixo). O mundo usa `basicTimeStep 16` para a bola não atravessar o piso no impacto.
-
-## Créditos
-
-Baseado nos tutoriais da [Cyberbotics](https://github.com/cyberbotics/webots).
-A textura `red_brick_wall.jpg` vem do repositório do Webots.
