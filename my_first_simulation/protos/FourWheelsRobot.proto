@@ -1,0 +1,160 @@
+#VRML_SIM R2025a utf8
+# Tutorial 7: Your First PROTO -- robo de 4 rodas da "Oficina".
+# Campos pedidos pelo tutorial: translation, rotation, bodyMass.
+# Extras: name (para varias instancias no mesmo mundo) e controller.
+
+PROTO FourWheelsRobot [
+  field SFVec3f    translation  0 0 0.04
+  field SFRotation rotation     0 0 1 0
+  field SFString   name         "carrinho"
+  field SFFloat    bodyMass     1
+  field SFString   controller   "four_wheels_collision_avoidance"
+]
+{
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    children [
+        DEF BODY Shape {
+          appearance PBRAppearance {
+            baseColor 0.78 0.16 0.12
+            roughness 0.6
+            metalness 0
+          }
+          geometry Box {
+            size 0.2 0.1 0.05
+          }
+        }
+        DEF WHEEL1 HingeJoint {
+          jointParameters HingeJointParameters {
+            axis 0 1 0
+            anchor 0.05 0.06 0
+          }
+          device [
+            RotationalMotor {
+              name "wheel1"
+            }
+          ]
+          endPoint Solid {
+            translation 0.05 0.06 0
+            rotation 1 0 0 1.5708
+            children [
+              DEF WHEEL Shape {
+                appearance PBRAppearance {
+                  baseColor 0.18 0.62 0.32
+                  roughness 0.9
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.02
+                  radius 0.04
+                  subdivision 24
+                }
+              }
+            ]
+            name "roda 1"
+            boundingObject USE WHEEL
+            physics DEF WHEEL_PH Physics {
+            }
+          }
+        }
+        DEF WHEEL2 HingeJoint {
+          jointParameters HingeJointParameters {
+            axis 0 1 0
+            anchor 0.05 -0.06 0
+          }
+          device [
+            RotationalMotor {
+              name "wheel2"
+            }
+          ]
+          endPoint Solid {
+            translation 0.05 -0.06 0
+            rotation 1 0 0 1.5708
+            children [
+              USE WHEEL
+            ]
+            name "roda 2"
+            boundingObject USE WHEEL
+            physics USE WHEEL_PH
+          }
+        }
+        DEF WHEEL3 HingeJoint {
+          jointParameters HingeJointParameters {
+            axis 0 1 0
+            anchor -0.05 0.06 0
+          }
+          device [
+            RotationalMotor {
+              name "wheel3"
+            }
+          ]
+          endPoint Solid {
+            translation -0.05 0.06 0
+            rotation 1 0 0 1.5708
+            children [
+              USE WHEEL
+            ]
+            name "roda 3"
+            boundingObject USE WHEEL
+            physics USE WHEEL_PH
+          }
+        }
+        DEF WHEEL4 HingeJoint {
+          jointParameters HingeJointParameters {
+            axis 0 1 0
+            anchor -0.05 -0.06 0
+          }
+          device [
+            RotationalMotor {
+              name "wheel4"
+            }
+          ]
+          endPoint Solid {
+            translation -0.05 -0.06 0
+            rotation 1 0 0 1.5708
+            children [
+              USE WHEEL
+            ]
+            name "roda 4"
+            boundingObject USE WHEEL
+            physics USE WHEEL_PH
+          }
+        }
+        DEF DS_RIGHT DistanceSensor {
+          translation 0.1 -0.03 0
+          rotation 0 0 1 -0.3
+          children [
+            DEF DS_SHAPE Shape {
+              appearance PBRAppearance {
+                baseColor 0.15 0.45 0.9
+                roughness 0.4
+                metalness 0
+              }
+              geometry Box {
+                size 0.01 0.01 0.01
+              }
+            }
+          ]
+          name "ds_right"
+          boundingObject USE DS_SHAPE
+        }
+        DEF DS_LEFT DistanceSensor {
+          translation 0.1 0.03 0
+          rotation 0 0 1 0.3
+          children [
+            USE DS_SHAPE
+          ]
+          name "ds_left"
+          boundingObject USE DS_SHAPE
+        }
+    ]
+    name IS name
+    boundingObject USE BODY
+    physics Physics {
+      density -1
+      mass IS bodyMass
+    }
+    controller IS controller
+  }
+}

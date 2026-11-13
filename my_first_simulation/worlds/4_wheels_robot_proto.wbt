@@ -1,0 +1,84 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/Parquetry.proto"
+EXTERNPROTO "../protos/FourWheelsRobot.proto"
+
+WorldInfo {
+  info [
+    "Tutorial 7: dois robos criados a partir do PROTO FourWheelsRobot."
+  ]
+  title "Oficina - T7: primeiro PROTO"
+  basicTimeStep 16
+}
+Viewpoint {
+  orientation -0.3392 0.3392 0.8774 1.7012
+  position 0 -1.1 1
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+  size 1 1
+  tileSize 0.25 0.25
+  appearance Parquetry {
+    type "dark strip"
+  }
+}
+DEF PAREDE_LESTE Solid {
+  translation 0.5 0 0.05
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.13 0.3 0.62
+        roughness 0.5
+        metalness 0
+      }
+      geometry Box {
+        size 0.02 0.98 0.1
+      }
+    }
+  ]
+  name "parede leste"
+  boundingObject USE WALL_SHAPE
+}
+DEF PAREDE_OESTE Solid {
+  translation -0.5 0 0.05
+  children [
+    USE WALL_SHAPE
+  ]
+  name "parede oeste"
+  boundingObject USE WALL_SHAPE
+}
+DEF PAREDE_SUL Solid {
+  translation 0 -0.5 0.05
+  rotation 0 0 1 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  name "parede sul"
+  boundingObject USE WALL_SHAPE
+}
+DEF PAREDE_NORTE Solid {
+  translation 0 0.5 0.05
+  rotation 0 0 1 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  name "parede norte"
+  boundingObject USE WALL_SHAPE
+}
+FourWheelsRobot {
+  translation -0.2 -0.15 0.04
+  rotation 0 0 1 0.6
+  name "carrinho"
+}
+FourWheelsRobot {
+  translation 0.2 0.25 0.04
+  rotation 0 0 1 -2.4
+  name "carrinho pesado"
+  bodyMass 2
+}

@@ -1,0 +1,142 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/Parquetry.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/OldSteel.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/WoodenBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/gctronic/e-puck/protos/E-puck.proto"
+
+WorldInfo {
+  info [
+    "Tutorial 3: paredes azul-cobalto, bola de tijolo (textura local) e bola OldSteel."
+  ]
+  title "Oficina - T3: aparencia"
+  basicTimeStep 16
+}
+Viewpoint {
+  orientation -0.1833 0.4167 0.8904 0.9178
+  position -0.55 -0.6 0.4
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+  size 1 1
+  tileSize 0.25 0.25
+  appearance Parquetry {
+    type "dark strip"
+  }
+}
+DEF CAIXA_A WoodenBox {
+  translation 0.3 0.3 0.05
+  rotation 0 0 1 0.6
+  name "caixa A"
+  size 0.1 0.1 0.1
+  mass 0.2
+}
+DEF CAIXA_B WoodenBox {
+  translation -0.3 -0.3 0.05
+  rotation 0 0 1 -0.25
+  name "caixa B"
+  size 0.1 0.1 0.1
+  mass 0.2
+}
+DEF CAIXA_C WoodenBox {
+  translation 0.35 -0.08 0.05
+  rotation 0 0 1 1.1
+  name "caixa C"
+  size 0.1 0.1 0.1
+  mass 0.2
+}
+DEF EXPLORADOR E-puck {
+  translation -0.25 0.1 0
+  name "explorador"
+  controller "epuck_go_forward"
+}
+DEF BOLA_TIJOLO Solid {
+  translation -0.05 0.1 0.2
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "textures/red_brick_wall.jpg"
+          ]
+        }
+        roughness 0.5
+        metalness 0
+      }
+      geometry DEF BALL_GEOMETRY Sphere {
+        radius 0.05
+        subdivision 2
+      }
+    }
+  ]
+  name "bola de tijolo"
+  boundingObject USE BALL_GEOMETRY
+  physics Physics {
+  }
+}
+DEF BOLA_ACO Solid {
+  translation 0.15 -0.22 0.2
+  children [
+    DEF BOLA_2_SHAPE Shape {
+      appearance OldSteel {
+      }
+      geometry Sphere {
+        radius 0.05
+        subdivision 2
+      }
+    }
+  ]
+  name "bola de aco"
+  boundingObject USE BOLA_2_SHAPE
+  physics Physics {
+  }
+}
+DEF PAREDE_LESTE Solid {
+  translation 0.5 0 0.05
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.13 0.3 0.62
+        roughness 0.5
+        metalness 0
+      }
+      geometry Box {
+        size 0.02 0.98 0.1
+      }
+    }
+  ]
+  name "parede leste"
+  boundingObject USE WALL_SHAPE
+}
+DEF PAREDE_OESTE Solid {
+  translation -0.5 0 0.05
+  children [
+    USE WALL_SHAPE
+  ]
+  name "parede oeste"
+  boundingObject USE WALL_SHAPE
+}
+DEF PAREDE_SUL Solid {
+  translation 0 -0.5 0.05
+  rotation 0 0 1 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  name "parede sul"
+  boundingObject USE WALL_SHAPE
+}
+DEF PAREDE_NORTE Solid {
+  translation 0 0.5 0.05
+  rotation 0 0 1 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  name "parede norte"
+  boundingObject USE WALL_SHAPE
+}

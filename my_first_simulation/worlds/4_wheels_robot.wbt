@@ -1,0 +1,218 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/Parquetry.proto"
+
+WorldInfo {
+  info [
+    "Tutorial 6: robo feito do zero -- corpo, 4 HingeJoints com motor e 2 sensores de distancia."
+  ]
+  title "Oficina - T6: robo de 4 rodas"
+  basicTimeStep 16
+}
+Viewpoint {
+  orientation -0.2809 0.1211 0.9521 2.3627
+  position 0.85 -0.9 0.8
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+  size 1 1
+  tileSize 0.25 0.25
+  appearance Parquetry {
+    type "dark strip"
+  }
+}
+DEF PAREDE_LESTE Solid {
+  translation 0.5 0 0.05
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.13 0.3 0.62
+        roughness 0.5
+        metalness 0
+      }
+      geometry Box {
+        size 0.02 0.98 0.1
+      }
+    }
+  ]
+  name "parede leste"
+  boundingObject USE WALL_SHAPE
+}
+DEF PAREDE_OESTE Solid {
+  translation -0.5 0 0.05
+  children [
+    USE WALL_SHAPE
+  ]
+  name "parede oeste"
+  boundingObject USE WALL_SHAPE
+}
+DEF PAREDE_SUL Solid {
+  translation 0 -0.5 0.05
+  rotation 0 0 1 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  name "parede sul"
+  boundingObject USE WALL_SHAPE
+}
+DEF PAREDE_NORTE Solid {
+  translation 0 0.5 0.05
+  rotation 0 0 1 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  name "parede norte"
+  boundingObject USE WALL_SHAPE
+}
+DEF CARRINHO Robot {
+  translation -0.2 -0.15 0.04
+  rotation 0 0 1 0.6
+  children [
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 0.78 0.16 0.12
+        roughness 0.6
+        metalness 0
+      }
+      geometry Box {
+        size 0.2 0.1 0.05
+      }
+    }
+    DEF WHEEL1 HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0.05 0.06 0
+      }
+      device [
+        RotationalMotor {
+          name "wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.05 0.06 0
+        rotation 1 0 0 1.5708
+        children [
+          DEF WHEEL Shape {
+            appearance PBRAppearance {
+              baseColor 0.18 0.62 0.32
+              roughness 0.9
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.04
+              subdivision 24
+            }
+          }
+        ]
+        name "roda 1"
+        boundingObject USE WHEEL
+        physics DEF WHEEL_PH Physics {
+        }
+      }
+    }
+    DEF WHEEL2 HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0.05 -0.06 0
+      }
+      device [
+        RotationalMotor {
+          name "wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.05 -0.06 0
+        rotation 1 0 0 1.5708
+        children [
+          USE WHEEL
+        ]
+        name "roda 2"
+        boundingObject USE WHEEL
+        physics USE WHEEL_PH
+      }
+    }
+    DEF WHEEL3 HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.05 0.06 0
+      }
+      device [
+        RotationalMotor {
+          name "wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.05 0.06 0
+        rotation 1 0 0 1.5708
+        children [
+          USE WHEEL
+        ]
+        name "roda 3"
+        boundingObject USE WHEEL
+        physics USE WHEEL_PH
+      }
+    }
+    DEF WHEEL4 HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.05 -0.06 0
+      }
+      device [
+        RotationalMotor {
+          name "wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.05 -0.06 0
+        rotation 1 0 0 1.5708
+        children [
+          USE WHEEL
+        ]
+        name "roda 4"
+        boundingObject USE WHEEL
+        physics USE WHEEL_PH
+      }
+    }
+    DEF DS_RIGHT DistanceSensor {
+      translation 0.1 -0.03 0
+      rotation 0 0 1 -0.3
+      children [
+        DEF DS_SHAPE Shape {
+          appearance PBRAppearance {
+            baseColor 0.15 0.45 0.9
+            roughness 0.4
+            metalness 0
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+        }
+      ]
+      name "ds_right"
+      boundingObject USE DS_SHAPE
+    }
+    DEF DS_LEFT DistanceSensor {
+      translation 0.1 0.03 0
+      rotation 0 0 1 0.3
+      children [
+        USE DS_SHAPE
+      ]
+      name "ds_left"
+      boundingObject USE DS_SHAPE
+    }
+  ]
+  name "carrinho"
+  boundingObject USE BODY
+  physics Physics {
+    density -1
+    mass 1
+  }
+  controller "four_wheels_collision_avoidance"
+}

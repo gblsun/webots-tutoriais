@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+# arquivos de estado local do Webots
+worlds/.*.wbproj
+**/worlds/.*.wbproj
+*.log
