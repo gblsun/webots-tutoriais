@@ -1,6 +1,6 @@
 # Webots Tutoriais — "Oficina"
 
-Minha versão dos [8 tutoriais oficiais do Webots](https://cyberbotics.com/doc/guide/tutorial-1-your-first-simulation-in-webots)
+Versão do Grupo dos [8 tutoriais oficiais do Webots](https://cyberbotics.com/doc/guide/tutorial-1-your-first-simulation-in-webots)
 (Webots **R2025a**, controladores em **Python**).
 
 Os valores que cada tutorial exige (tamanhos, massas, raios, nomes de dispositivos,
